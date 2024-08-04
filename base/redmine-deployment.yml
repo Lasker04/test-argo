@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redmine
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redmine
+  template:
+    metadata:
+      labels:
+        app: redmine
+    spec:
+      containers:
+        - name: redmine
+          image: bitnami/redmine:latest
+          env:
+            - name: REDMINE_DB_MYSQL
+              value: mysql
+            - name: REDMINE_DATABASE_NAME
+              value: redmine
+            - name: REDMINE_DATABASE_USER
+              value: user
+            - name: REDMINE_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql-password
+            - name: REDMINE_DATABASE_TYPE
+              value: mariadb
+          ports:
+            - containerPort: 3000

@@ -1,0 +1,15 @@
+resources:
+  - redmine-deployment.yml
+  - redmine-service.yml
+  - elasticsearch-deployment.yml
+  - elasticsearch-service.yml
+  - kibana-deployment.yml
+  - kibana-service.yml
+  - logstash-deployment.yml
+  - logstash-service.yml
+  - prometheus-deployment.yml
+  - prometheus-service.yml
+  - grafana-deployment.yml
+  - grafana-service.yml
+  - mysql-deployment.yml
+namespace: your-namespace

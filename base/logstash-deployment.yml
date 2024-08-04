@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logstash
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logstash
+  template:
+    metadata:
+      labels:
+        app: logstash
+    spec:
+      containers:
+        - name: logstash
+          image: docker.elastic.co/logstash/logstash:7.13.4
+          ports:
+            - containerPort: 5044
+          resources:
+            limits:
+              cpu: "1"
+              memory: "1Gi"
+            requests:
+              cpu: "500m"
+              memory: "512Mi"
+          env:
+            - name: GOMAXPROCS
+              value: "1"
+            - name: LS_JAVA_OPTS
+              value: "-Xms512m -Xmx512m"
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 3000
+            capabilities:
+              add: ["SYS_RESOURCE"]
